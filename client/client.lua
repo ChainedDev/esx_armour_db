@@ -7,10 +7,12 @@ AddEventHandler('LRP-Armour:Client:SetPlayerArmour', function(armour)
     playerLoaded = true
 end)
 
-local TimeFreshCurrentArmour = 60000  -- 60 seconds
 
-local armor = 0
 Citizen.CreateThread(function()
+        
+    local TimeFreshCurrentArmour = 60000  -- 60 seconds
+    local armor = 0
+        
     while true do
         Citizen.Wait(0)
             
