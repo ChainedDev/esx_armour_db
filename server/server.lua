@@ -15,12 +15,16 @@ end)
 
 RegisterServerEvent('LRP-Armour:Server:RefreshCurrentArmour')
 AddEventHandler('LRP-Armour:Server:RefreshCurrentArmour', function(updateArmour)
-    
-    local identifier = GetPlayerIdentifiers(source)[1]
-        
-    MySQL.Async.execute("UPDATE users SET armour = @armour WHERE identifier = @identifier", { 
-        ['@identifier'] = identifier,
-        ['@armour'] = tonumber(updateArmour)
-    })
+    local src = source
+    if (updateArmour ~= nil) and (type(updateArmour) == 'number') and (updateArmour <= 200) then
+        local identifier = GetPlayerIdentifiers(src)[1]
+
+        MySQL.Async.execute("UPDATE users SET armour = @armour WHERE identifier = @identifier", { 
+           ['@identifier'] = identifier,
+           ['@armour'] = tonumber(updateArmour)
+        })
+    else
+        exports.clrp_base.banCheater(src, 'armour injection')
+    end
 end)
 
